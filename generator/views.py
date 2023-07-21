@@ -65,8 +65,10 @@ def chain_generate():
                 chains += f" dst-address={r.dst_addr}"
             if r.conn_status.exists():
                 chains += " connection-state="
-                for c in r.conn_status.all():
-                    chains += f"{c.name}," # TODO: solve ,
+                for index, c in enumerate(r.conn_status.all()):
+                    chains += f"{c.name}"
+                    if index != len(r.conn_status.all()) - 1:
+                        chains += ","
             if r.protocol:
                 chains += f" protocol={r.protocol.name}"
                 if r.dst_port:
@@ -76,7 +78,10 @@ def chain_generate():
                 else:
                     raise "No port specified"
             chains += "\n"
-    #print(rules)
+        chains += f"add chain={rule.name} action={rule.default_action}\n"
+        chains += "\n"
+    chains += "add chain=forward action=drop comment=\"Drop everything else\"\n"
+
     return chains
 
 
