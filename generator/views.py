@@ -49,12 +49,34 @@ def jump_generate():
     return zone_jumps
 
 
+# add chain=PUBLIC-TO-LOCAL action=accept \
+#    connection-state=established,related,untracked
+# add chain=PUBLIC-TO-ROUTER action=accept protocol=tcp dst-port=1723 comment="PPTP"
 def chain_generate():
     chains = ""
-    rules = FWRule.objects.order_by('rule__name', 'rule_number')
-    for rule in rules:
-     pass
-    print(rules)
+    named_rules = FWNameRule.objects.all()
+    for rule in named_rules:
+        rules = FWRule.objects.filter(rule=rule).all().order_by('rule_number')
+        for r in rules:
+            chains += f"add chain={rule.name} action={r.action.name}"
+            if r.src_addr:
+                chains += f" src-address={r.src_addr}"
+            if r.dst_addr:
+                chains += f" dst-address={r.dst_addr}"
+            if r.conn_status.exists():
+                chains += " connection-state="
+                for c in r.conn_status.all():
+                    chains += f"{c.name}," # TODO: solve ,
+            if r.protocol:
+                chains += f" protocol={r.protocol.name}"
+                if r.dst_port:
+                    chains += f" dst-port={r.dst_port}"
+                elif r.src_port:
+                    chains += f" src-port={r.src_port}"
+                else:
+                    raise "No port specified"
+            chains += "\n"
+    #print(rules)
     return chains
 
 
@@ -62,5 +84,6 @@ def generate(request):
     list_com, list_int = list_generate()
     jumps = jump_generate()
     chains = chain_generate()
-    out = f"{list_com}\n\n{list_int}\n\n/ip firewall filter\n{jumps}"
+    out = f"{list_com}\n\n{list_int}\n\n/ip firewall filter\n{jumps}\n\n"
+    out += f"{chains}"
     return HttpResponse(out, content_type="text/plain")
