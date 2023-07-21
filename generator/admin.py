@@ -18,14 +18,14 @@ class FWInterfaceAdmin(admin.ModelAdmin):
     pass
 
 
-class FWZoneInline(admin.TabularInline):
+class FWZoneMapInline(admin.TabularInline):
     model = FWZoneMap
     fk_name = "to_zone"
     extra = 1
 
 
 class FWZoneAdmin(admin.ModelAdmin):
-    inlines = [FWZoneInline]
+    inlines = [FWZoneMapInline]
 
 
 class FWNamedRuleInline(admin.TabularInline):

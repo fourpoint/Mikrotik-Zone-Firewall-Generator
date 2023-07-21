@@ -92,7 +92,7 @@ class FWRule(models.Model):
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.rule} {self.rule_id} action {self.action}"
+        return f"{self.rule} {self.rule_number} action {self.action}"
 
     class Meta:
         verbose_name = "Firewall Rule"
@@ -105,7 +105,7 @@ class FWZoneMap(models.Model):
     rule = models.ForeignKey(FWNameRule, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"From {self.from_zone} firewall name {self.rule}"
+        return f"From {self.from_zone} to {self.to_zone} firewall name {self.rule}"
 
     class Meta:
         verbose_name = "Firewall From Zone Mapping"
