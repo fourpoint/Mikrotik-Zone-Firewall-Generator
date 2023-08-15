@@ -1,0 +1,30 @@
+[
+  {
+    "model": "generator.connstate",
+    "pk": 1,
+    "fields": {
+      "name": "established"
+    }
+  },
+  {
+    "model": "generator.connstate",
+    "pk": 2,
+    "fields": {
+      "name": "related"
+    }
+  },
+  {
+    "model": "generator.connstate",
+    "pk": 3,
+    "fields": {
+      "name": "invalid"
+    }
+  },
+  {
+    "model": "generator.connstate",
+    "pk": 4,
+    "fields": {
+      "name": "new"
+    }
+  }
+]

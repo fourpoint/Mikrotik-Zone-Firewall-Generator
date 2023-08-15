@@ -1,0 +1,23 @@
+[
+  {
+    "model": "generator.ipprotocol",
+    "pk": 1,
+    "fields": {
+      "name": "tcp"
+    }
+  },
+  {
+    "model": "generator.ipprotocol",
+    "pk": 2,
+    "fields": {
+      "name": "udp"
+    }
+  },
+  {
+    "model": "generator.ipprotocol",
+    "pk": 3,
+    "fields": {
+      "name": "icmp"
+    }
+  }
+]

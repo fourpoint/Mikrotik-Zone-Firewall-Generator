@@ -1,0 +1,23 @@
+[
+  {
+    "model": "generator.fwactions",
+    "pk": 1,
+    "fields": {
+      "name": "accept"
+    }
+  },
+  {
+    "model": "generator.fwactions",
+    "pk": 2,
+    "fields": {
+      "name": "drop"
+    }
+  },
+  {
+    "model": "generator.fwactions",
+    "pk": 3,
+    "fields": {
+      "name": "reject"
+    }
+  }
+]
