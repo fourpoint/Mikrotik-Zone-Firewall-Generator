@@ -46,6 +46,14 @@ def jump_generate():
                       f"out-interface-list={m.to_zone.name}_zone " \
                       f"comment=\"router -> {m.to_zone.name}\"\n"
 
+    zone_jumps += "\n"
+    # Intra zone policies
+    zones = FWZone.objects.filter(local=False)
+    for zone in zones:
+        zone_jumps += f"add chain=forward action=accept " \
+                      f"in-interface-list={zone.name}_zone out-interface-list={zone.name}_zone " \
+                      f"comment=\"Traffic inside zone {zone.name}\"\n"
+
     return zone_jumps
 
 
